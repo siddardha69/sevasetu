@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | GrievanceDesk</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <span class="logo-text" style="color: white; margin-left: 10px;">GrievanceDesk</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">📊 Dashboard</a>
+                <a href="#" class="nav-item">📋 All Complaints</a>
+                <a href="#" class="nav-item">👥 Manage Officers</a>
+                <a href="#" class="nav-item">🏢 Departments</a>
+                <a href="#" class="nav-item">📈 Reports & Analytics</a>
+                <a href="#" class="nav-item">⚙️ Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="divider" style="background: rgba(255,255,255,0.1); margin: 0 0 10px 0;"></div>
+                <a href="#" id="logout-btn" class="nav-item logout">🚪 Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <h2 class="page-title">Dashboard</h2>
+                </div>
+                <div class="top-bar-right">
+                    <div class="notification-bell">
+                        🔔 <span class="badge-dot"></span>
+                    </div>
+                    <div class="vertical-divider"></div>
+                    <div class="user-profile">
+                        <div class="avatar">A</div>
+                        <span class="user-name">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-body">
+                <!-- Stats Row -->
+                <div class="stats-grid">
+                    <div class="stat-card card blue">
+                        <div class="stat-info">
+                            <span class="label-text">Total Complaints</span>
+                            <h3 id="stat-total" class="count-up">0</h3>
+                            <span class="stat-change">+12% from last month</span>
+                        </div>
+                        <div class="stat-icon">📋</div>
+                    </div>
+                    <div class="stat-card card orange">
+                        <div class="stat-info">
+                            <span class="label-text">Pending</span>
+                            <h3 id="stat-pending" class="count-up">0</h3>
+                        </div>
+                        <div class="stat-icon">⏳</div>
+                    </div>
+                    <div class="stat-card card blue">
+                        <div class="stat-info">
+                            <span class="label-text">In Progress</span>
+                            <h3 id="stat-progress" class="count-up">0</h3>
+                        </div>
+                        <div class="stat-icon">🔄</div>
+                    </div>
+                    <div class="stat-card card green">
+                        <div class="stat-info">
+                            <span class="label-text">Resolved</span>
+                            <h3 id="stat-resolved" class="count-up">0</h3>
+                        </div>
+                        <div class="stat-icon">✅</div>
+                    </div>
+                </div>
+
+                <!-- Table Section -->
+                <div class="table-container card">
+                    <div class="table-header">
+                        <h3>Recent Complaints</h3>
+                        <div class="table-actions">
+                            <select id="status-filter">
+                                <option value="All">All Status</option>
+                                <option value="Received">Received</option>
+                                <option value="Pending">Pending</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Resolved">Resolved</option>
+                            </select>
+                            <div class="table-search">
+                                <input type="text" id="table-search-input" placeholder="Search complaints...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="complaints-table">
+                            <thead>
+                                <tr>
+                                    <th>Complaint ID</th>
+                                    <th>Citizen Name</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="complaints-tbody">
+                                <!-- Data rows will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="pagination">
+                        <!-- Pagination buttons -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Assign Modal -->
+    <div id="assign-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Assign Officer</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="label-text">Complaint ID: <span id="assign-id" style="color: var(--dark-text); font-weight: 700;"></span></p>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label class="label-text">Select Officer</label>
+                    <select id="officer-select">
+                        <!-- Officers will be injected here -->
+                    </select>
+                </div>
+                <button id="confirm-assign" class="btn-primary" style="width: 100%; margin-top: 20px;">Assign Officer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

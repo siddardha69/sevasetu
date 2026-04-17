@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Complaint | GrievanceDesk</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/track.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-logo">
+            <div class="logo-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <span class="logo-text">GrievanceDesk</span>
+        </div>
+        <div class="mobile-toggle">☰</div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="submit-complaint.html" class="nav-link">Submit Complaint</a>
+            <a href="track-complaint.html" class="nav-link active">Track Complaint</a>
+            <a href="index.html" class="nav-link">Officer Login</a>
+            <a href="index.html" class="nav-link">Admin Login</a>
+        </div>
+    </nav>
+
+    <main class="track-page">
+        <section class="hero-header fade-in">
+            <div class="container">
+                <h1>Track Your Complaint Status</h1>
+                <p>Enter your details below to check the real-time progress of your submitted grievance.</p>
+                
+                <div class="search-bar-container" id="search-container">
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="track-input" placeholder="Enter your Complaint ID or Mobile Number">
+                        <button id="track-btn" class="track-btn-main">Track Status →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <div class="container">
+                <!-- No Results State -->
+                <div id="no-results" class="no-results card">
+                    <div class="no-results-icon">🔍</div>
+                    <h3>No complaint found</h3>
+                    <p>We couldn't find any complaint matching that ID or Mobile Number. Please double check and try again.</p>
+                </div>
+
+                <!-- Complaint Details Card (Hidden by default) -->
+                <div id="complaint-card" class="complaint-card card">
+                    <div class="card-section section-status">
+                        <div class="id-group">
+                            <span class="label-text">COMPLAINT ID</span>
+                            <h2 id="display-id">GD-2024-04821</h2>
+                        </div>
+                        <div id="status-badge" class="status-badge">🔄 In Progress</div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="card-section section-details">
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="label-text">PROBLEM</span>
+                                <div class="detail-value" id="display-desc">No water supply — Banjara Hills Zone 4</div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label-text">DEPARTMENT</span>
+                                <div class="detail-value"><span id="dept-icon">💧</span> <span id="display-dept">Water Board</span></div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label-text">SUBMITTED ON</span>
+                                <div class="detail-value" id="display-date">14 April 2025</div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label-text">OFFICER ASSIGNED</span>
+                                <div class="detail-value"><span id="officer-icon">👤</span> <span id="display-officer">Ramesh Kumar</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="card-section section-timeline">
+                        <span class="label-text">STATUS TIMELINE</span>
+                        <div class="timeline-container" id="timeline-container">
+                            <!-- Timeline items will be injected here -->
+                        </div>
+                    </div>
+
+                    <div class="resolution-banner" id="resolution-banner">
+                        <span>📅 Expected resolution by:</span>
+                        <strong id="display-resolution">16 April 2025</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <p>© 2024 Government of India. All rights reserved. Managed by Department of Administrative Reforms & Public Grievances.</p>
+            </div>
+            <div class="footer-right">
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Help Desk</a>
+                </div>
+                <a href="#" class="footer-link">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/common.js"></script>
+    <script src="js/track.js"></script>
+</body>
+</html>

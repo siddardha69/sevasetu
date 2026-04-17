@@ -1,0 +1,277 @@
+/* ===== HERO SECTION ===== */
+.hero-section {
+    background: #ffffff;
+    padding: 80px 0;
+}
+
+.hero-container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 0 0 55%;
+}
+
+.hero-heading {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 44px;
+    line-height: 1.2;
+    margin-top: 20px;
+    color: var(--dark-text);
+}
+
+.hero-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted-gray-text);
+    margin-top: 16px;
+    max-width: 480px;
+}
+
+.hero-actions {
+    margin-top: 32px;
+    display: flex;
+    gap: 16px;
+}
+
+.hero-image-container {
+    flex: 0 0 45%;
+    position: relative;
+}
+
+.hero-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.floating-card {
+    position: absolute;
+    bottom: 20px;
+    left: -30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    padding: 20px;
+    max-width: 280px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: floatIn 0.8s ease 0.5s forwards;
+}
+
+@keyframes floatIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.check-circle {
+    width: 32px;
+    height: 32px;
+    background: var(--success-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--dark-text);
+}
+
+.status-msg {
+    color: var(--success-green);
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.status-desc {
+    font-size: 12.5px;
+    color: var(--muted-gray-text);
+    margin-top: 4px;
+}
+
+/* ===== STATS SECTION ===== */
+.stats-section {
+    padding: 60px 0;
+    background: white;
+}
+
+.stats-container {
+    max-width: 900px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-item {
+    flex: 1;
+}
+
+.stat-number {
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--dark-text);
+    transition: transform 0.3s ease;
+}
+
+.stat-number:hover {
+    transform: scale(1.05);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--muted-gray-text);
+    margin-top: 4px;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--card-border);
+}
+
+/* ===== HOW IT WORKS ===== */
+.how-it-works {
+    padding: 80px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.section-header h2 {
+    font-size: 32px;
+}
+
+.section-header p {
+    color: var(--muted-gray-text);
+    margin-top: 8px;
+}
+
+.steps-grid {
+    display: flex;
+    gap: 24px;
+}
+
+.step-card {
+    flex: 1;
+    padding: 36px 28px;
+    text-align: center;
+}
+
+.step-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--light-badge-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 20px;
+}
+
+.step-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.step-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted-gray-text);
+}
+
+/* ===== LOGIN MODAL ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-card {
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active .modal-card {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.close-modal {
+    background: transparent;
+    font-size: 24px;
+    color: var(--muted-gray-text);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 46px;
+    border: 1px solid var(--input-border);
+    border-radius: var(--input-radius);
+    padding: 0 16px;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(53,69,238,0.1);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .hero-container { flex-direction: column; text-align: center; }
+    .hero-content { flex: 0 0 100%; }
+    .hero-text { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-image-container { flex: 0 0 100%; width: 100%; max-width: 600px; }
+    .floating-card { left: 0; right: 0; margin: 0 auto; }
+}
+
+@media (max-width: 768px) {
+    .hero-heading { font-size: 32px; }
+    .steps-grid { flex-direction: column; }
+    .stats-container { flex-direction: column; gap: 30px; }
+    .stat-divider { display: none; }
+}

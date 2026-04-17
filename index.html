@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrievanceDesk | Government Grievance Portal</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <div class="logo-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <span class="logo-text">GrievanceDesk</span>
+        </div>
+        <div class="mobile-toggle">☰</div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="submit-complaint.html" class="nav-link">Submit Complaint</a>
+            <a href="track-complaint.html" class="nav-link">Track Complaint</a>
+            <a href="#" class="nav-link" id="officer-login-btn">Officer Login</a>
+            <a href="#" class="nav-link" id="admin-login-btn">Admin Login</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content fade-in">
+                    <div class="badge badge-blue">🏛️ Government Grievance Portal</div>
+                    <h1 class="hero-heading">Your Voice Matters — <em>We're Listening</em></h1>
+                    <p class="hero-text">A transparent and efficient platform to submit, track, and resolve public grievances. We ensure every citizen's concern is heard and addressed promptly.</p>
+                    <div class="hero-actions">
+                        <a href="submit-complaint.html" class="btn-primary">Submit a Complaint</a>
+                        <a href="track-complaint.html" class="btn-outline">Track Your Complaint →</a>
+                    </div>
+                </div>
+                <div class="hero-image-container fade-in">
+                    <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&h=400&fit=crop" alt="Government Building" class="hero-img">
+                    <div class="floating-card" id="floating-status-card">
+                        <div class="status-row">
+                            <div class="check-circle">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <span class="status-title">Status Update</span>
+                        </div>
+                        <div class="status-msg">Issue Resolved</div>
+                        <p class="status-desc">Your complaint #GD-2024-04821 has been successfully resolved.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container stats-container fade-in">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="124500">0</div>
+                    <div class="stat-label">Complaints Resolved</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="98.5">0</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="24">0</div>
+                    <div class="stat-label">Avg Response Time</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2>How It Works</h2>
+                    <p>Simple three-step process to get your grievance resolved</p>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card card fade-in">
+                        <div class="step-icon">📝</div>
+                        <h3>Submit Complaint</h3>
+                        <p>Fill in your details and describe your issue. Upload supporting documents for faster resolution.</p>
+                    </div>
+                    <div class="step-card card fade-in">
+                        <div class="step-icon">🔍</div>
+                        <h3>Track Progress</h3>
+                        <p>Monitor your complaint status in real-time with our transparent tracking system.</p>
+                    </div>
+                    <div class="step-card card fade-in">
+                        <div class="step-icon">✅</div>
+                        <h3>Get Resolution</h3>
+                        <p>Receive timely updates and resolution from assigned government officers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal (Hidden by default) -->
+    <div id="login-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modal-title">Login</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="label-text">Email Address</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label class="label-text">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <p>© 2024 Government of India. All rights reserved. Managed by Department of Administrative Reforms & Public Grievances.</p>
+            </div>
+            <div class="footer-right">
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Help Desk</a>
+                </div>
+                <a href="#" class="footer-link">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/common.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
