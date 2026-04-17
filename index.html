@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,17 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/home.css">
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-logo">
             <div class="logo-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
             </div>
             <span class="logo-text">SevaSetu</span>
         </div>
@@ -31,12 +37,23 @@
         <section class="hero-section">
             <div class="container hero-container">
                 <div class="hero-content fade-in">
-                    <div class="badge badge-blue">🏛️ Government Grievance Portal</div>
+                    <div class="badge badge-blue">Government Grievance Portal</div>
                     <h1 class="hero-heading">Your Voice Matters — <em>We're Listening</em></h1>
-                    <p class="hero-text">A transparent and efficient platform to submit, track, and resolve public grievances. We ensure every citizen's concern is heard and addressed promptly.</p>
+                    <p class="hero-text">A transparent and efficient platform to submit, track, and resolve public
+                        grievances. We ensure every citizen's concern is heard and addressed promptly.</p>
                     <div class="hero-actions">
                         <a href="submit-complaint.html" class="btn-primary">Submit a Complaint</a>
                         <a href="track-complaint.html" class="btn-outline">Track Your Complaint →</a>
+                    </div>
+                    <div class="hero-call-action">
+                        <a href="tel:1800111222" class="btn-call">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <span>Raise Complaint with Call</span>
+                        </a>
                     </div>
                 </div>
                 <div class="hero-image-container fade-in">
@@ -44,7 +61,10 @@
                     <div class="floating-card" id="floating-status-card">
                         <div class="status-row">
                             <div class="check-circle">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white"
+                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
                             </div>
                             <span class="status-title">Status Update</span>
                         </div>
@@ -86,7 +106,8 @@
                     <div class="step-card card fade-in">
                         <div class="step-icon">📝</div>
                         <h3>Submit Complaint</h3>
-                        <p>Fill in your details and describe your issue. Upload supporting documents for faster resolution.</p>
+                        <p>Fill in your details and describe your issue. Upload supporting documents for faster
+                            resolution.</p>
                     </div>
                     <div class="step-card card fade-in">
                         <div class="step-icon">🔍</div>
@@ -102,6 +123,31 @@
             </div>
         </section>
     </main>
+
+    <!-- Call Modal (Hidden by default) -->
+    <div id="call-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Raise Complaint with Call</h2>
+                <button class="close-modal" id="close-call-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Enter your phone number and our AI assistant will call you to record your complaint.</p>
+                <div class="form-group">
+                    <label class="label-text">Phone Number</label>
+                    <input type="text" id="call-phone" placeholder="+91XXXXXXXXXX" required>
+                    <small class="input-hint">Format: +91 followed by 10 digits</small>
+                </div>
+                <div class="modal-actions">
+                    <button id="cancel-call" class="btn-outline" style="width: 100%; margin-top: 10px;">Cancel</button>
+                    <button id="submit-call" class="btn-primary" style="width: 100%; margin-top: 10px;">
+                        <span id="btn-text">Call Me</span>
+                        <span id="btn-loader" class="loader hidden"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Login Modal (Hidden by default) -->
     <div id="login-modal" class="modal-overlay">
@@ -128,7 +174,8 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-left">
-                <p>© 2024 Government of India. All rights reserved. Managed by Department of Administrative Reforms & Public Grievances.</p>
+                <p>© 2024 Government of India. All rights reserved. Managed by Department of Administrative Reforms &
+                    Public Grievances.</p>
             </div>
             <div class="footer-right">
                 <div class="footer-links">
@@ -144,4 +191,5 @@
     <script src="js/common.js"></script>
     <script src="js/home.js"></script>
 </body>
+
 </html>

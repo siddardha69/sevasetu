@@ -4,6 +4,7 @@ const Home = {
     init() {
         this.initStatsCounter();
         this.initLoginModals();
+        this.initCallModal();
     },
 
     initStatsCounter() {
@@ -48,7 +49,7 @@ const Home = {
         const modal = document.getElementById('login-modal');
         const title = document.getElementById('modal-title');
         const form = document.getElementById('login-form');
-        const closeBtn = document.querySelector('.close-modal');
+        const closeBtn = modal.querySelector('.close-modal');
         
         let currentRole = '';
 
@@ -96,6 +97,77 @@ const Home = {
                 }
             }
         });
+    },
+
+    initCallModal() {
+        const callBtn = document.querySelector('.btn-call');
+        const modal = document.getElementById('call-modal');
+        const closeBtn = document.getElementById('close-call-modal');
+        const cancelBtn = document.getElementById('cancel-call');
+        const submitBtn = document.getElementById('submit-call');
+        const phoneInput = document.getElementById('call-phone');
+        const btnText = document.getElementById('btn-text');
+        const btnLoader = document.getElementById('btn-loader');
+
+        const openPopup = () => modal.classList.add('active');
+        const closePopup = () => {
+            modal.classList.remove('active');
+            phoneInput.value = '';
+        };
+
+        callBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openPopup();
+        });
+
+        closeBtn.addEventListener('click', closePopup);
+        cancelBtn.addEventListener('click', closePopup);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closePopup();
+        });
+
+        submitBtn.addEventListener('click', () => this.makeCall(phoneInput, btnText, btnLoader, closePopup));
+    },
+
+    async makeCall(phoneInput, btnText, btnLoader, closePopup) {
+        const phone = phoneInput.value.trim();
+        const phoneRegex = /^\+91\d{10}$/;
+
+        if (!phoneRegex.test(phone)) {
+            GrievanceDesk.showToast('Please enter a valid phone number (+91XXXXXXXXXX)', 'error');
+            return;
+        }
+
+        // Show loading state
+        btnText.classList.add('hidden');
+        btnLoader.classList.remove('hidden');
+        phoneInput.disabled = true;
+
+        try {
+            const response = await fetch('http://localhost:3001/call', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('You will receive a call shortly');
+                closePopup();
+            } else {
+                GrievanceDesk.showToast(result.message || 'Failed to initiate call', 'error');
+            }
+        } catch (error) {
+            console.error('Call Error:', error);
+            GrievanceDesk.showToast('Network error. Is the backend server running?', 'error');
+        } finally {
+            // Reset loading state
+            btnText.classList.remove('hidden');
+            btnLoader.classList.add('hidden');
+            phoneInput.disabled = false;
+        }
     }
 };
 
