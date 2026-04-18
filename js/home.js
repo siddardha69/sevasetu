@@ -3,7 +3,6 @@
 const Home = {
     init() {
         this.initStatsCounter();
-        this.initLoginModals();
         this.initCallModal();
     },
 
@@ -43,60 +42,6 @@ const Home = {
             }
         };
         window.requestAnimationFrame(step);
-    },
-
-    initLoginModals() {
-        const modal = document.getElementById('login-modal');
-        const title = document.getElementById('modal-title');
-        const form = document.getElementById('login-form');
-        const closeBtn = modal.querySelector('.close-modal');
-        
-        let currentRole = '';
-
-        document.getElementById('officer-login-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            currentRole = 'officer';
-            title.innerText = 'Officer Login';
-            modal.classList.add('active');
-        });
-
-        document.getElementById('admin-login-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            currentRole = 'admin';
-            title.innerText = 'Admin Login';
-            modal.classList.add('active');
-        });
-
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('active');
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('active');
-        });
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            const data = GrievanceDesk.getData();
-
-            if (currentRole === 'admin') {
-                if (email === data.auth.admin.email && password === data.auth.admin.password) {
-                    sessionStorage.setItem('gd_user', JSON.stringify({ role: 'admin', name: data.auth.admin.name }));
-                    window.location.href = 'admin-dashboard.html?v=3';
-                } else {
-                    GrievanceDesk.showToast('Invalid admin credentials', 'error');
-                }
-            } else {
-                if (email === data.auth.officer.email && password === data.auth.officer.password) {
-                    sessionStorage.setItem('gd_user', JSON.stringify({ role: 'officer', name: data.auth.officer.name, department: data.auth.officer.department }));
-                    window.location.href = 'officer-dashboard.html?v=3';
-                } else {
-                    GrievanceDesk.showToast('Invalid officer credentials', 'error');
-                }
-            }
-        });
     },
 
     initCallModal() {

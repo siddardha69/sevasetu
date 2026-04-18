@@ -1,0 +1,245 @@
+.social-page {
+    min-height: 80vh;
+    padding-bottom: 60px;
+}
+
+.hero-header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    padding: 60px 0;
+    text-align: center;
+    color: white;
+}
+
+.hero-header h1 {
+    color: white;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.hero-header p {
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.social-filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.filter-chip {
+    padding: 8px 20px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-chip:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.filter-chip.active {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.feed-section {
+    padding: 40px 0;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+}
+
+.social-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.social-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-platform-bar {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.platform-twitter { color: #1da1f2; background: #f0f9ff; }
+.platform-instagram { color: #e4405f; background: #fff1f2; }
+.platform-facebook { color: #1877f2; background: #eff6ff; }
+
+.card-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.username {
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.timestamp {
+    font-size: 11px;
+    color: var(--muted-gray-text);
+}
+
+.post-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--body-text);
+    margin-bottom: 20px;
+    font-style: italic;
+    padding-left: 10px;
+    border-left: 3px solid #e2e8f0;
+}
+
+.ai-extraction {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #e2e8f0;
+}
+
+.extraction-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.extracted-data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.data-item {
+    font-size: 12px;
+}
+
+.data-label {
+    color: var(--muted-gray-text);
+    display: block;
+    margin-bottom: 2px;
+    font-size: 10px;
+}
+
+.data-value {
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.card-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-convert {
+    flex: 1;
+    padding: 8px;
+    font-size: 12px;
+    border-radius: 8px;
+    background: var(--primary-blue);
+    color: white;
+    font-weight: 600;
+    text-align: center;
+}
+
+.btn-view-source {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: var(--dark-text);
+    font-weight: 600;
+}
+
+.chip-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.card-platform-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.loading-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 0;
+    color: var(--muted-gray-text);
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #e2e8f0;
+    border-top-color: var(--primary-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .social-grid {
+        grid-template-columns: 1fr;
+    }
+}

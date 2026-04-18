@@ -108,7 +108,100 @@ const GrievanceDesk = {
             }
         }
         this.setupNavbar();
+        this.initLoginModals();
         this.initAnimations();
+    },
+
+    initLoginModals() {
+        let modal = document.getElementById('login-modal');
+        
+        // Inject modal if missing
+        if (!modal) {
+            const modalHTML = `
+                <div id="login-modal" class="modal-overlay">
+                    <div class="modal-card">
+                        <div class="modal-header">
+                            <h2 id="modal-title">Staff Login</h2>
+                            <button class="close-modal">&times;</button>
+                        </div>
+                        <form id="login-form">
+                            <div class="form-group">
+                                <label class="label-text">Email Address</label>
+                                <input type="email" id="login-email" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="label-text">Password</label>
+                                <input type="password" id="login-password" placeholder="Enter your password" required>
+                            </div>
+                            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Login</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            modal = document.getElementById('login-modal');
+        }
+
+        const title = document.getElementById('modal-title');
+        const form = document.getElementById('login-form');
+        const closeBtn = modal.querySelector('.close-modal');
+        const officerBtn = document.getElementById('officer-login-btn');
+        const adminBtn = document.getElementById('admin-login-btn');
+        
+        let currentRole = '';
+
+        if (officerBtn) {
+            officerBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentRole = 'officer';
+                if (title) title.innerText = 'Officer Login';
+                modal.classList.add('active');
+            });
+        }
+
+        if (adminBtn) {
+            adminBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentRole = 'admin';
+                if (title) title.innerText = 'Admin Login';
+                modal.classList.add('active');
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                const data = this.getData();
+
+                if (currentRole === 'admin') {
+                    if (email === data.auth.admin.email && password === data.auth.admin.password) {
+                        sessionStorage.setItem('gd_user', JSON.stringify({ role: 'admin', name: data.auth.admin.name }));
+                        window.location.href = 'admin-dashboard.html?v=3';
+                    } else {
+                        this.showToast('Invalid admin credentials', 'error');
+                    }
+                } else {
+                    if (email === data.auth.officer.email && password === data.auth.officer.password) {
+                        sessionStorage.setItem('gd_user', JSON.stringify({ role: 'officer', name: data.auth.officer.name, department: data.auth.officer.department }));
+                        window.location.href = 'officer-dashboard.html?v=3';
+                    } else {
+                        this.showToast('Invalid officer credentials', 'error');
+                    }
+                }
+            });
+        }
     },
 
     getData() {

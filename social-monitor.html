@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Monitor | SevaSetu</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/social.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-logo">
+            <div class="logo-box">
+                <img src="assets/logo.png" alt="SevaSetu Logo" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <span class="logo-text">SevaSetu</span>
+        </div>
+        <div class="mobile-toggle">☰</div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="submit-complaint.html" class="nav-link">Submit Complaint</a>
+            <a href="track-complaint.html" class="nav-link">Track Complaint</a>
+            <a href="social-monitor.html" class="nav-link active">Social Monitor</a>
+            <a href="#" class="nav-link" id="officer-login-btn">Officer Login</a>
+            <a href="#" class="nav-link" id="admin-login-btn">Admin Login</a>
+        </div>
+    </nav>
+
+    <main class="social-page">
+        <section class="hero-header fade-in">
+            <div class="container">
+                <h1>Social Media Intelligence</h1>
+                <p>AI-powered monitoring of public grievances across X (Twitter), Instagram, and Facebook.</p>
+                
+                <div class="social-filters">
+                    <button class="filter-chip active" data-platform="all">All Platforms</button>
+                    <button class="filter-chip" data-platform="twitter">
+                        <img src="assets/x.jpg" alt="X" class="chip-icon"> Twitter
+                    </button>
+                    <button class="filter-chip" data-platform="instagram">
+                        <img src="assets/instagram.jpg" alt="Instagram" class="chip-icon"> Instagram
+                    </button>
+                    <button class="filter-chip" data-platform="facebook">
+                        <img src="assets/facebook.png" alt="Facebook" class="chip-icon"> Facebook
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="feed-section">
+            <div class="container">
+                <div class="social-grid" id="social-feed">
+                    <!-- Social cards will be injected here -->
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Scanning social media for local grievances...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <p>© 2024 Government of India. All rights reserved. Managed by Department of Administrative Reforms & Public Grievances.</p>
+            </div>
+            <div class="footer-right">
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Help Desk</a>
+                </div>
+                <a href="#" class="footer-link">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modal-title">Staff Login</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="label-text">Email Address</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label class="label-text">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/common.js?v=3"></script>
+    <script src="js/social.js?v=1"></script>
+</body>
+</html>
