@@ -52,12 +52,27 @@ const Admin = {
         this.tbody.innerHTML = '';
         complaints.forEach(c => {
             const row = document.createElement('tr');
+            
+            // Extract AI data or fallback
+            const aiClass = c.aiData ? c.aiData.aiClassification : c.department;
+            const cluster = c.aiData ? c.aiData.aiClusteringTag : 'N/A';
+            const score = c.aiData ? c.aiData.aiPriorityScore : '-';
+            const priorityLevel = c.aiData ? c.aiData.aiPriorityLevel : c.priority;
+            
+            // Color code the priority score
+            let scoreBadge = '-';
+            if (score !== '-') {
+                const color = score >= 8 ? 'var(--danger-red)' : (score >= 5 ? '#f39c12' : 'var(--success-green)');
+                scoreBadge = `<span style="background: ${color}; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 12px;">${score}/10 (${priorityLevel})</span>`;
+            }
+
             row.innerHTML = `
                 <td><strong>${c.id}</strong></td>
                 <td>${c.name}</td>
-                <td>${c.department}</td>
+                <td><span style="font-size: 13px; background: #eef2ff; color: var(--primary-blue); padding: 4px 8px; border-radius: 4px;">${aiClass}</span></td>
+                <td><span style="font-size: 12px; color: var(--muted-gray-text);">#${cluster}</span></td>
                 <td><span class="status-pill ${c.status.toLowerCase().replace(' ', '-')}">${c.status}</span></td>
-                <td>${GrievanceDesk.formatDate(c.dateSubmitted)}</td>
+                <td>${scoreBadge}</td>
                 <td>
                     <span class="action-btn" onclick="Admin.viewComplaint('${c.id}')">View</span>
                     ${c.officer === 'Unassigned' ? `<button class="assign-btn-small" onclick="Admin.openAssignModal('${c.id}')">Assign</button>` : ''}

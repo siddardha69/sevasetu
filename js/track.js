@@ -71,6 +71,17 @@ const TrackPage = {
             badge.classList.add('resolved');
         }
 
+        // Display AI Insights if available
+        const aiSection = document.getElementById('ai-insights-section');
+        if (complaint.aiData) {
+            aiSection.style.display = 'block';
+            document.getElementById('ai-analysis').innerText = complaint.aiData.aiAnalysis || 'N/A';
+            document.getElementById('ai-class').innerText = complaint.aiData.aiClassification || 'N/A';
+            document.getElementById('ai-cluster').innerText = complaint.aiData.aiClusteringTag || 'N/A';
+        } else {
+            aiSection.style.display = 'none';
+        }
+
         // Build Timeline
         this.buildTimeline(complaint);
         

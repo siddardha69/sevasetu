@@ -84,14 +84,14 @@ const Home = {
             if (currentRole === 'admin') {
                 if (email === data.auth.admin.email && password === data.auth.admin.password) {
                     sessionStorage.setItem('gd_user', JSON.stringify({ role: 'admin', name: data.auth.admin.name }));
-                    window.location.href = 'admin-dashboard.html';
+                    window.location.href = 'admin-dashboard.html?v=3';
                 } else {
                     GrievanceDesk.showToast('Invalid admin credentials', 'error');
                 }
             } else {
                 if (email === data.auth.officer.email && password === data.auth.officer.password) {
                     sessionStorage.setItem('gd_user', JSON.stringify({ role: 'officer', name: data.auth.officer.name, department: data.auth.officer.department }));
-                    window.location.href = 'officer-dashboard.html';
+                    window.location.href = 'officer-dashboard.html?v=3';
                 } else {
                     GrievanceDesk.showToast('Invalid officer credentials', 'error');
                 }

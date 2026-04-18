@@ -1,18 +1,90 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const { GoogleGenAI } = require('@google/genai');
 require('dotenv').config();
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors()); // Enable CORS for frontend requests
-app.use(express.json()); // Parse JSON request bodies
+app.use(express.json({limit: '50mb'})); // Parse JSON request bodies with higher limit for images
 
 // GET / - Simple health check
 app.get('/', (req, res) => {
     res.send('<h1>GrievanceDesk Backend is Running!</h1><p>Ready to handle call requests.</p>');
+});
+
+/**
+ * POST /api/analyze-complaint
+ * AI Analysis Endpoint
+ */
+app.post('/api/analyze-complaint', async (req, res) => {
+    const { text, imageBase64, mimeType } = req.body;
+
+    if (!text && !imageBase64) {
+        return res.status(400).json({ success: false, message: 'Text or image is required' });
+    }
+
+    try {
+        const prompt = `
+        You are an AI assistant for a Government Grievance Portal.
+        Analyze the following citizen complaint.
+        
+        Text Description: ${text || 'None provided.'}
+        
+        If an image is provided, analyze the image to understand the context and severity of the issue.
+
+        Respond with ONLY a JSON object with exactly these keys:
+        {
+            "aiAnalysis": "Brief professional summary of the core issue",
+            "aiClassification": "Recommended department (e.g., Water Board, Electricity, Roads & Transport, Municipal Services, Health, Education, Other)",
+            "aiClusteringTag": "A 2-3 word tag to cluster similar issues (e.g., 'Pothole', 'Power Outage')",
+            "aiPriorityScore": integer from 1 to 10 (10 being most urgent),
+            "aiPriorityLevel": "High", "Medium", or "Low"
+        }
+        `;
+
+        const contents = [{ role: 'user', parts: [{ text: prompt }] }];
+
+        if (imageBase64) {
+            // Strip the data URL prefix if present
+            const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, "");
+            contents[0].parts.push({
+                inlineData: {
+                    data: base64Data,
+                    mimeType: mimeType || 'image/jpeg'
+                }
+            });
+        }
+
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: contents,
+            config: {
+                responseMimeType: 'application/json'
+            }
+        });
+
+        const jsonStr = response.text;
+        const aiData = JSON.parse(jsonStr);
+
+        return res.status(200).json({
+            success: true,
+            data: aiData
+        });
+
+    } catch (error) {
+        console.error('Gemini API Error:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to analyze complaint with AI',
+            error: error.message || error.toString()
+        });
+    }
 });
 
 /**

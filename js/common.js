@@ -19,7 +19,14 @@ const SEED_DATA = {
                 { status: "Assigned", date: "2025-04-15", time: "10:30 AM", note: "Assigned to Ramesh Kumar" },
                 { status: "In Progress", date: "2025-04-15", time: "02:00 PM", note: "Officer is investigating the issue" }
             ],
-            expectedResolution: "2025-04-16"
+            expectedResolution: "2025-04-16",
+            aiData: {
+                aiAnalysis: "The citizen reported a complete halt of water supply in Banjara Hills Zone 4 lasting for 3 days. Multiple residents are facing acute water shortage. Requires immediate dispatch of water tankers and pipeline inspection.",
+                aiClassification: "Water Board",
+                aiClusteringTag: "Water Supply Outage",
+                aiPriorityScore: 9,
+                aiPriorityLevel: "High"
+            }
         },
         {
             id: "GD-2024-04822",
@@ -37,7 +44,14 @@ const SEED_DATA = {
             timeline: [
                 { status: "Received", date: "2025-04-13", time: "11:00 AM", note: "Complaint received" }
             ],
-            expectedResolution: "2025-04-15"
+            expectedResolution: "2025-04-15",
+            aiData: {
+                aiAnalysis: "Consistent power cuts reported during evening hours in Jubilee Hills. The voltage fluctuations pose a significant risk to household electrical appliances.",
+                aiClassification: "Electricity",
+                aiClusteringTag: "Power Fluctuation",
+                aiPriorityScore: 6,
+                aiPriorityLevel: "Medium"
+            }
         },
         {
             id: "GD-2024-04823",
@@ -58,7 +72,14 @@ const SEED_DATA = {
                 { status: "In Progress", date: "2025-04-13", time: "09:00 AM", note: "Repair work started" },
                 { status: "Resolved", date: "2025-04-14", time: "05:00 PM", note: "Potholes filled and road cleared" }
             ],
-            expectedResolution: "2025-04-14"
+            expectedResolution: "2025-04-14",
+            aiData: {
+                aiAnalysis: "Large potholes identified on the main road in Madhapur. This is leading to traffic bottlenecks and potential safety hazards for commuters.",
+                aiClassification: "Roads & Transport",
+                aiClusteringTag: "Pothole Repair",
+                aiPriorityScore: 4,
+                aiPriorityLevel: "Low"
+            }
         }
     ],
     officers: [
@@ -76,8 +97,15 @@ const SEED_DATA = {
 /* ===== CORE UTILITIES ===== */
 const GrievanceDesk = {
     init() {
-        if (!localStorage.getItem('gd_data')) {
+        let existingData = localStorage.getItem('gd_data');
+        if (!existingData) {
             localStorage.setItem('gd_data', JSON.stringify(SEED_DATA));
+        } else {
+            // Force update for testing if aiData doesn't exist
+            let parsed = JSON.parse(existingData);
+            if (parsed.complaints && parsed.complaints.length > 0 && !parsed.complaints[0].aiData) {
+                localStorage.setItem('gd_data', JSON.stringify(SEED_DATA));
+            }
         }
         this.setupNavbar();
         this.initAnimations();
