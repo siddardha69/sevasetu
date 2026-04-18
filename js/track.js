@@ -84,7 +84,10 @@ const TrackPage = {
 
         // Build Timeline
         this.buildTimeline(complaint);
-        
+
+        // Phase 6: AI Resolution Predictor
+        this.loadAIPrediction(complaint);
+
         // Scroll to results
         this.resultsCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
     },
@@ -128,6 +131,55 @@ const TrackPage = {
     showNoResults() {
         this.resultsCard.style.display = 'none';
         this.noResults.style.display = 'block';
+    },
+
+    async loadAIPrediction(complaint) {
+        const section = document.getElementById('ai-predict-section');
+        if (!section || complaint.status === 'Resolved') {
+            if (section) section.style.display = 'none';
+            return;
+        }
+
+        section.style.display = 'block';
+        document.getElementById('predict-days').textContent = '...';
+        document.getElementById('predict-confidence').textContent = 'Loading';
+        document.getElementById('predict-suggestion').textContent = 'Calculating your estimate...';
+
+        const complaints = GrievanceDesk.getComplaints();
+        const clusterTag = complaint.aiData?.aiClusteringTag || 'General';
+        const similarOpenCount = complaints.filter(c =>
+            c.aiData?.aiClusteringTag === clusterTag &&
+            c.status !== 'Resolved' &&
+            c.id !== complaint.id
+        ).length;
+
+        try {
+            const response = await fetch('http://localhost:3000/api/predict-resolution', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    department: complaint.department,
+                    priorityLevel: complaint.aiData?.aiPriorityLevel || complaint.priority || 'Medium',
+                    clusterTag,
+                    similarOpenCount
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.estimatedDays) {
+                    document.getElementById('predict-days').textContent = `~${data.estimatedDays} days`;
+                    const confBadge = document.getElementById('predict-confidence');
+                    confBadge.textContent = data.confidence;
+                    confBadge.className = 'predict-confidence-badge conf-' + (data.confidence || 'medium').toLowerCase();
+                    document.getElementById('predict-suggestion').textContent = data.suggestion || 'Keep your complaint ID handy for follow-up.';
+                }
+            } else {
+                section.style.display = 'none';
+            }
+        } catch (e) {
+            section.style.display = 'none';
+        }
     }
 };
 

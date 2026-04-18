@@ -234,6 +234,10 @@ const SubmitPage = {
             return this.showError('file', 'Please upload a file');
         }
 
+        // Remove any old duplicate warning
+        const oldWarning = document.getElementById('duplicate-warning');
+        if (oldWarning) oldWarning.remove();
+
         // Loading state
         btn.disabled = true;
         btnText.innerText = 'Analyzing with AI...';
@@ -276,6 +280,12 @@ const SubmitPage = {
                     const result = await response.json();
                     if (result.success && result.data) {
                         aiData = result.data;
+                        // Phase 4: Handle escalation — upgrade to Critical
+                        if (aiData.escalationReason) {
+                            aiData.aiPriorityLevel = 'Critical';
+                            aiData.aiPriorityScore = 10;
+                            GrievanceDesk.showToast(`⚠️ Escalated: ${aiData.escalationReason}`, 'error');
+                        }
                     }
                 } else {
                     console.warn('AI Endpoint returned non-OK status');
@@ -286,10 +296,37 @@ const SubmitPage = {
                 GrievanceDesk.showToast('AI Server is down. Saving complaint locally.', 'error');
             }
 
+            // Phase 3: Duplicate Detection
+            btnText.innerText = 'Checking for duplicates...';
+            try {
+                const existingComplaints = GrievanceDesk.getComplaints();
+                const dupResponse = await fetch('http://localhost:3000/api/detect-duplicate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        newComplaint: { department: dept, area, description: desc, aiClusteringTag: aiData.aiClusteringTag },
+                        existingComplaints
+                    })
+                });
+                if (dupResponse.ok) {
+                    const dupResult = await dupResponse.json();
+                    if (dupResult.isDuplicate && dupResult.confidence >= 70) {
+                        const warning = document.createElement('div');
+                        warning.id = 'duplicate-warning';
+                        warning.style.cssText = 'background:#fef3c7;border:1.5px solid #f59e0b;border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:13.5px;color:#92400e;display:flex;align-items:flex-start;gap:10px;';
+                        warning.innerHTML = `<span style="font-size:20px;flex-shrink:0">⚠️</span><div><strong>Similar complaint already exists!</strong><br>Complaint <strong>${dupResult.matchedId}</strong> is ${dupResult.confidence}% similar to yours. ${dupResult.reason}<br><small style="margin-top:6px;display:block">You can still submit — your complaint will be tracked separately.</small></div><button onclick="document.getElementById('duplicate-warning').remove()" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:18px;color:#92400e;flex-shrink:0">✕</button>`;
+                        document.getElementById('complaint-form-container').insertBefore(warning, document.getElementById('submit-complaint-form'));
+                    }
+                }
+            } catch (dupError) {
+                console.log('Duplicate check skipped:', dupError.message);
+            }
+
             const complaintID = GrievanceDesk.generateID();
             const today = new Date().toISOString().split('T')[0];
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+            btnText.innerText = 'Saving complaint...';
             const newComplaint = {
                 id: complaintID,
                 name,

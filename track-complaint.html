@@ -6,6 +6,7 @@
     <title>Track Complaint | SevaSetu</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/track.css">
+    <link rel="stylesheet" href="css/chatbot.css">
 </head>
 <body>
     <nav class="navbar">
@@ -117,6 +118,31 @@
                         <span>📅 Expected resolution by:</span>
                         <strong id="display-resolution">16 April 2025</strong>
                     </div>
+
+                    <!-- AI Resolution Predictor (Phase 6) -->
+                    <div id="ai-predict-section" style="display:none; margin-top: 20px; background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%); border: 1.5px solid #c7d2fe; border-radius: 14px; padding: 20px;">
+                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+                            <span style="font-size:22px">🤖</span>
+                            <div>
+                                <div style="font-weight:700; font-size:14px; color:#3730a3;">AI Resolution Prediction</div>
+                                <div style="font-size:12px; color:#6366f1;">Powered by Gemini 2.5 Flash</div>
+                            </div>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:14px;">
+                            <div style="background:white; border-radius:10px; padding:14px; text-align:center; box-shadow:0 2px 8px rgba(99,102,241,0.1);">
+                                <div style="font-size:11px; font-weight:600; color:#6b7280; margin-bottom:6px;">ESTIMATED TIME</div>
+                                <div id="predict-days" style="font-size:22px; font-weight:800; color:#3730a3;">...</div>
+                            </div>
+                            <div style="background:white; border-radius:10px; padding:14px; text-align:center; box-shadow:0 2px 8px rgba(99,102,241,0.1);">
+                                <div style="font-size:11px; font-weight:600; color:#6b7280; margin-bottom:6px;">CONFIDENCE</div>
+                                <span id="predict-confidence" class="predict-confidence-badge">Loading</span>
+                            </div>
+                        </div>
+                        <div style="background:white; border-radius:10px; padding:12px 16px; box-shadow:0 2px 8px rgba(99,102,241,0.1);">
+                            <div style="font-size:11px; font-weight:600; color:#6b7280; margin-bottom:6px;">💡 AI SUGGESTION</div>
+                            <div id="predict-suggestion" style="font-size:13.5px; color:#1e293b; line-height:1.5;">Calculating your estimate...</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -138,7 +164,31 @@
         </div>
     </footer>
 
+    <!-- AI Chatbot Widget -->
+    <div id="chatbot-widget">
+        <button id="chatbot-toggle" class="chatbot-toggle-btn" aria-label="Open AI Assistant">
+            <span id="chatbot-toggle-icon">💬</span>
+            <span class="chatbot-pulse"></span>
+        </button>
+        <div id="chatbot-panel" class="chatbot-panel">
+            <div class="chatbot-header">
+                <div class="chatbot-avatar">🤖</div>
+                <div>
+                    <div class="chatbot-title">Setu AI Assistant</div>
+                    <div class="chatbot-status">Online · SevaSetu Portal</div>
+                </div>
+                <button id="chatbot-close">✕</button>
+            </div>
+            <div id="chatbot-messages" class="chatbot-messages"></div>
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" placeholder="Ask me anything..." autocomplete="off" />
+                <button id="chatbot-send">➤</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/common.js"></script>
-    <script src="js/track.js"></script>
+    <script src="js/track.js?v=2"></script>
+    <script src="js/chatbot.js?v=1"></script>
 </body>
 </html>
