@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,12 @@
     <link rel="stylesheet" href="css/submit.css?v=2">
     <link rel="stylesheet" href="css/chatbot.css">
 </head>
+
 <body>
     <nav class="navbar">
         <div class="nav-logo">
             <div class="logo-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                <img src="assets/logo.png" alt="SevaSetu Logo" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <span class="logo-text">SevaSetu</span>
         </div>
@@ -30,7 +32,8 @@
         <section class="hero-header fade-in">
             <div class="container">
                 <h1>Submit Your Complaint</h1>
-                <p>File a new grievance by providing your details below. We'll ensure your complaint reaches the right department.</p>
+                <p>File a new grievance by providing your details below. We'll ensure your complaint reaches the right
+                    department.</p>
             </div>
         </section>
 
@@ -40,13 +43,15 @@
                 <div class="form-card card fade-in" id="aadhaar-auth-container">
                     <div class="text-center" style="text-align: center; margin-bottom: 24px;">
                         <h2>Verify Your Identity</h2>
-                        <p style="color: var(--muted-gray-text); font-size: 14px; margin-top: 8px;">Please authenticate using your Aadhaar number to proceed with the complaint.</p>
+                        <p style="color: var(--muted-gray-text); font-size: 14px; margin-top: 8px;">Please authenticate
+                            using your Aadhaar number to proceed with the complaint.</p>
                     </div>
-                    
+
                     <div id="aadhaar-step-1">
                         <div class="form-group">
                             <label class="label-text">Aadhaar Number</label>
-                            <input type="text" id="aadhaar-number" placeholder="Enter 12-digit Aadhaar Number" maxlength="12" pattern="\d{12}">
+                            <input type="text" id="aadhaar-number" placeholder="Enter 12-digit Aadhaar Number"
+                                maxlength="12" pattern="\d{12}">
                             <span class="error-msg" id="aadhaar-error"></span>
                         </div>
                         <button type="button" class="btn-primary submit-btn" id="send-otp-btn">
@@ -58,8 +63,10 @@
                     <div id="aadhaar-step-2" style="display: none;">
                         <div class="form-group">
                             <label class="label-text">Enter OTP</label>
-                            <p style="font-size: 12px; color: var(--success-green); margin-bottom: 8px;">Mock OTP sent successfully! Enter any 6 digits.</p>
-                            <input type="text" id="aadhaar-otp" placeholder="Enter 6-digit OTP" maxlength="6" pattern="\d{6}">
+                            <p style="font-size: 12px; color: var(--success-green); margin-bottom: 8px;">Mock OTP sent
+                                successfully! Enter any 6 digits.</p>
+                            <input type="text" id="aadhaar-otp" placeholder="Enter 6-digit OTP" maxlength="6"
+                                pattern="\d{6}">
                             <span class="error-msg" id="otp-error"></span>
                         </div>
                         <button type="button" class="btn-primary submit-btn" id="verify-otp-btn">
@@ -75,7 +82,8 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="label-text">Full Name</label>
-                                <input type="text" id="citizen-name" placeholder="Enter your full name" required minlength="2">
+                                <input type="text" id="citizen-name" placeholder="Enter your full name" required
+                                    minlength="2">
                                 <span class="error-msg" id="name-error"></span>
                             </div>
                         </div>
@@ -85,7 +93,8 @@
                                 <label class="label-text">Mobile Number</label>
                                 <div class="input-with-prefix">
                                     <span class="prefix">+91</span>
-                                    <input type="tel" id="citizen-mobile" placeholder="10-digit mobile number" required pattern="[0-9]{10}">
+                                    <input type="tel" id="citizen-mobile" placeholder="10-digit mobile number" required
+                                        pattern="[0-9]{10}">
                                 </div>
                                 <span class="error-msg" id="mobile-error"></span>
                             </div>
@@ -115,7 +124,8 @@
                                 <label class="label-text">Area / Zone</label>
                                 <div class="input-with-icon">
                                     <span class="icon">📍</span>
-                                    <input type="text" id="complaint-area" placeholder="e.g., Banjara Hills Zone 4" required minlength="3">
+                                    <input type="text" id="complaint-area" placeholder="e.g., Banjara Hills Zone 4"
+                                        required minlength="3">
                                 </div>
                                 <span class="error-msg" id="area-error"></span>
                             </div>
@@ -167,7 +177,10 @@
                 <!-- Success Card (Initially Hidden) -->
                 <div class="success-card card" id="success-card">
                     <div class="success-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
                     </div>
                     <h2>Complaint Submitted Successfully!</h2>
                     <div class="complaint-id-box">
@@ -209,7 +222,8 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-left">
-                <p>© 2024 Government of India. All rights reserved. Managed by Department of Administrative Reforms & Public Grievances.</p>
+                <p>© 2024 Government of India. All rights reserved. Managed by Department of Administrative Reforms &
+                    Public Grievances.</p>
             </div>
             <div class="footer-right">
                 <div class="footer-links">
@@ -226,4 +240,5 @@
     <script src="js/submit.js?v=3"></script>
     <script src="js/chatbot.js?v=1"></script>
 </body>
+
 </html>

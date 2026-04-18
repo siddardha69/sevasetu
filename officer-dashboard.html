@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,14 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/officer.css">
 </head>
+
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="logo-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                    <img src="assets/logo.png" alt="SevaSetu Logo" style="width: 100%; height: 100%; object-fit: contain;">
                 </div>
                 <span class="logo-text" style="color: white; margin-left: 10px;">SevaSetu</span>
             </div>
@@ -38,7 +40,8 @@
                 <div class="top-bar-right">
                     <div class="officer-info">
                         <span id="officer-name-display" class="user-name">Ramesh Kumar</span>
-                        <span id="officer-dept-badge" class="badge badge-blue" style="margin: 0 15px; font-size: 11px;">Water Board</span>
+                        <span id="officer-dept-badge" class="badge badge-blue"
+                            style="margin: 0 15px; font-size: 11px;">Water Board</span>
                     </div>
                     <div class="vertical-divider"></div>
                     <div class="user-profile">
@@ -160,13 +163,15 @@
 
                 <div class="update-section">
                     <span class="label-text">ADD RESPONSE / UPDATE STATUS</span>
-                    <textarea id="update-note" placeholder="Add your response or resolution notes..." class="panel-textarea"></textarea>
+                    <textarea id="update-note" placeholder="Add your response or resolution notes..."
+                        class="panel-textarea"></textarea>
                     <div class="update-actions">
                         <select id="update-status-select" class="panel-select">
                             <option value="In Progress">Keep In Progress</option>
                             <option value="Resolved">Mark as Resolved</option>
                         </select>
-                        <button id="save-update-btn" class="btn-primary" style="width: 100%; margin-top: 15px;">Save Update</button>
+                        <button id="save-update-btn" class="btn-primary" style="width: 100%; margin-top: 15px;">Save
+                            Update</button>
                     </div>
                 </div>
 
@@ -185,4 +190,5 @@
     <script src="js/common.js"></script>
     <script src="js/officer.js"></script>
 </body>
+
 </html>

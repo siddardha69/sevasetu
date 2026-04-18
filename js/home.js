@@ -145,7 +145,7 @@ const Home = {
         phoneInput.disabled = true;
 
         try {
-            const response = await fetch('http://localhost:3001/call', {
+            const response = await fetch('http://localhost:3002/call', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ phone })
