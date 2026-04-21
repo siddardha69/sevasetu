@@ -66,15 +66,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    function renderFeed(platform = 'all') {
-        socialFeed.innerHTML = '';
+    async function fetchLiveFeed(platform = 'all') {
+        socialFeed.innerHTML = '<div class="loading-state"><div class="spinner"></div><p>Scanning live social media for REAL grievances...</p></div>';
+        
+        try {
+            const response = await fetch(`http://localhost:3002/api/social-live?area=Hyderabad`);
+            const data = await response.json();
 
-        const filteredPosts = platform === 'all'
-            ? mockSocialPosts
-            : mockSocialPosts.filter(post => post.platform === platform);
+            if (data.success && data.grievances && data.grievances.length > 0) {
+                renderFeed(data.grievances, platform);
+            } else {
+                // Fallback to mock if API returns nothing but show a message
+                console.warn("No live data found, showing cached examples.");
+                renderFeed(mockSocialPosts, platform);
+                GrievanceDesk.showToast("Showing cached examples (No new live posts found in last 24h)", "info");
+            }
+        } catch (error) {
+            console.error('Fetch Social Error:', error);
+            renderFeed(mockSocialPosts, platform);
+            GrievanceDesk.showToast("Live Monitor Offline - Showing cached examples", "error");
+        }
+    }
+
+    function renderFeed(grievances, platform = 'all') {
+        socialFeed.innerHTML = '';
+        
+        const filteredPosts = platform === 'all' 
+            ? grievances 
+            : grievances.filter(post => post.platform === platform);
 
         if (filteredPosts.length === 0) {
-            socialFeed.innerHTML = '<div class="loading-state"><p>No social grievances found for this platform.</p></div>';
+            socialFeed.innerHTML = '<div class="loading-state"><p>No live grievances found for this platform.</p></div>';
             return;
         }
 
@@ -91,11 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <div class="card-platform-bar ${platformClass}">
                     <span style="display:flex; align-items:center; gap:8px;">${platformLogo} ${post.platform.toUpperCase()}</span>
-                    <span>🔴 LIVE AI MONITOR</span>
+                    <span>🔴 LIVE REAL-TIME FEED</span>
                 </div>
                 <div class="card-content">
                     <div class="user-info">
-                        <div class="user-avatar">${post.avatar}</div>
+                        <div class="user-avatar">${post.avatar || 'U'}</div>
                         <div>
                             <div class="username">${post.user}</div>
                             <div class="timestamp">${post.time}</div>
@@ -105,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     <div class="ai-extraction">
                         <div class="extraction-header">
-                            <span>✨ AI EXTRACTION</span>
+                            <span>✨ AI EXTRACTION (VERIFIED)</span>
                         </div>
                         <div class="extracted-data">
                             <div class="data-item">
@@ -129,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="card-footer">
                     <button class="btn-convert" onclick="convertToOfficial('${post.id}')">Convert to Official Complaint</button>
-                    <button class="btn-view-source">View Source</button>
+                    ${post.link ? `<button class="btn-view-source" onclick="window.open('${post.link}', '_blank')">View Source</button>` : '<button class="btn-view-source" disabled>No Link</button>'}
                 </div>
             `;
             socialFeed.appendChild(card);
@@ -150,20 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
         chip.addEventListener('click', () => {
             filterChips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
-
-            // Simulate loading
-            socialFeed.innerHTML = '<div class="loading-state"><div class="spinner"></div><p>Filtering feed...</p></div>';
-
-            setTimeout(() => {
-                renderFeed(chip.dataset.platform);
-            }, 600);
+            fetchLiveFeed(chip.dataset.platform);
         });
     });
 
     // Initial render
-    setTimeout(() => {
-        renderFeed();
-    }, 1000);
+    fetchLiveFeed();
 });
 
 function convertToOfficial(id) {

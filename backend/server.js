@@ -2,12 +2,18 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const { GoogleGenAI } = require('@google/genai');
-require('dotenv').config();
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
+
+if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
+    console.error('\n❌ ERROR: GEMINI_API_KEY is missing in backend/.env');
+    console.error('Please get a key from https://aistudio.google.com/app/apikey and add it to .env\n');
+}
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 // Middleware
 app.use(cors());
@@ -331,6 +337,72 @@ Respond with ONLY a valid JSON object:
     } catch (error) {
         console.error('Resolution Prediction Error:', error);
         return res.status(500).json({ success: false, message: 'Prediction unavailable' });
+    }
+});
+
+let socialCache = {
+    data: null,
+    timestamp: 0,
+    area: ''
+};
+
+/**
+ * GET /api/social-live
+ * 100% Real-Time Social Media Monitoring (Optimized with Caching)
+ */
+app.get('/api/social-live', async (req, res) => {
+    try {
+        const area = req.query.area || 'Hyderabad';
+        const SERPER_KEY = process.env.SERPER_API_KEY;
+
+        // --- SPEED BOOST: Check Cache First (5 minute cache) ---
+        const now = Date.now();
+        if (socialCache.data && socialCache.area === area && (now - socialCache.timestamp) < 5 * 60 * 1000) {
+            console.log('🚀 Serving Social Feed from Cache');
+            return res.json({ success: true, grievances: socialCache.data, cached: true });
+        }
+
+        if (!SERPER_KEY) {
+            return res.status(500).json({ success: false, message: 'Serper API key missing' });
+        }
+
+        // 1. Perform Live Search
+        const searchQuery = `site:twitter.com OR site:facebook.com "${area}" grievance OR complaint OR "pothole"`;
+        
+        const searchResponse = await axios.post('https://google.serper.dev/search', {
+            q: searchQuery,
+            num: 8,
+            tbs: "qdr:d" // Last 24 hours only for extreme speed and freshness
+        }, {
+            headers: { 'X-API-KEY': SERPER_KEY, 'Content-Type': 'application/json' }
+        });
+
+        const searchResults = searchResponse.data.organic || [];
+        if (searchResults.length === 0) return res.json({ success: true, grievances: [] });
+
+        // 2. Optimized Gemini Prompt for Faster Response
+        const prompt = `Convert these search results into a SevaSetu JSON array. 
+        Focus on the 4 most critical recent grievances.
+        DATA: ${JSON.stringify(searchResults.map(r => ({ t: r.title, s: r.snippet, l: r.link })))}
+        
+        Format (JSON only): [{id, platform, user, text, time, link, ai_category, ai_severity, ai_location, ai_summary}]`;
+
+        const aiResponse = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: [{ role: 'user', parts: [{ text: prompt }] }],
+            config: { responseMimeType: 'application/json' }
+        });
+
+        const grievances = JSON.parse(aiResponse.text);
+        
+        // --- Save to Cache ---
+        socialCache = { data: grievances, timestamp: now, area: area };
+
+        return res.status(200).json({ success: true, grievances });
+
+    } catch (error) {
+        console.error('Social Live Error:', error);
+        return res.status(500).json({ success: false, message: 'Failed to fetch live data' });
     }
 });
 
