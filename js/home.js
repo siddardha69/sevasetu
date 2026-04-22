@@ -106,7 +106,11 @@ const Home = {
             }
         } catch (error) {
             console.error('Call Error:', error);
-            GrievanceDesk.showToast('Network error. Is the backend server running?', 'error');
+            if (window.location.protocol === 'https:' && GrievanceDesk.CONFIG.API_BASE_URL.startsWith('http:')) {
+                GrievanceDesk.showToast('Mixed Content Error! In Brave/Chrome settings, set "Insecure content" to "Allow" for this site.', 'error');
+            } else {
+                GrievanceDesk.showToast('Network error. Is the backend server running?', 'error');
+            }
         } finally {
             // Reset loading state
             btnText.classList.remove('hidden');

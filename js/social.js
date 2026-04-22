@@ -84,7 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Fetch Social Error:', error);
             renderFeed(mockSocialPosts, platform);
-            GrievanceDesk.showToast("Live Monitor Offline - Showing cached examples", "error");
+            if (window.location.protocol === 'https:' && GrievanceDesk.CONFIG.API_BASE_URL.startsWith('http:')) {
+                GrievanceDesk.showToast("Mixed Content Blocked! Check Brave/Chrome site settings.", "error");
+            } else {
+                GrievanceDesk.showToast("Live Monitor Offline - Showing cached examples", "error");
+            }
         }
     }
 
