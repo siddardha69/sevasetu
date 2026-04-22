@@ -2,9 +2,7 @@
 node_modules/
 backend/node_modules/
 
-# Environment Variables (SENSITIVE)
-.env
-backend/.env
+# OS Files
 
 # OS Files
 .DS_Store
