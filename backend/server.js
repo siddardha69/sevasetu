@@ -66,7 +66,7 @@ app.post('/api/analyze-complaint', async (req, res) => {
         }
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-pro',
             contents,
             config: { responseMimeType: 'application/json' }
         });
@@ -128,7 +128,7 @@ Guidelines:
         });
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-pro',
             contents
         });
 
@@ -187,7 +187,7 @@ Respond with ONLY a valid JSON array (include all officers ranked):
 ]`;
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-pro',
             contents: [{ role: 'user', parts: [{ text: prompt }] }],
             config: { responseMimeType: 'application/json' }
         });
@@ -245,7 +245,7 @@ Respond with ONLY a valid JSON object:
 }`;
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-pro',
             contents: [{ role: 'user', parts: [{ text: prompt }] }],
             config: { responseMimeType: 'application/json' }
         });
@@ -285,7 +285,7 @@ Write a concise 3-4 sentence executive summary covering:
 Write in formal government report style. Be specific with numbers from the data.`;
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-pro',
             contents: [{ role: 'user', parts: [{ text: prompt }] }]
         });
 
@@ -326,7 +326,7 @@ Respond with ONLY a valid JSON object:
 }`;
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-pro',
             contents: [{ role: 'user', parts: [{ text: prompt }] }],
             config: { responseMimeType: 'application/json' }
         });
@@ -378,19 +378,13 @@ app.get('/api/social-live', async (req, res) => {
         });
 
         const searchResults = searchResponse.data.organic || [];
+        console.log(`🔍 Serper Search found ${searchResults.length} results for ${area}`);
         if (searchResults.length === 0) return res.json({ success: true, grievances: [] });
-
-        // 2. Optimized Gemini Prompt for Faster Response
-        const prompt = `Convert these search results into a SevaSetu JSON array. 
-        Focus on the 4 most critical recent grievances.
-        DATA: ${JSON.stringify(searchResults.map(r => ({ t: r.title, s: r.snippet, l: r.link })))}
         
-        Format (JSON only): [{id, platform, user, text, time, link, ai_category, ai_severity, ai_location, ai_summary}]`;
-
         const aiResponse = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: [{ role: 'user', parts: [{ text: prompt }] }],
-            config: { responseMimeType: 'application/json' }
+            model: 'gemini-2.0-flash',
+            contents: `Identify and extract at most 4 critical civic grievances (potholes, water, electricity) from these search results for ${area}. Return ONLY a JSON array with these keys: id, platform, user, text, time, link, ai_category, ai_severity, ai_location, ai_summary.
+            RESULTS: ${JSON.stringify(searchResults.map(r => ({ t: r.title, s: r.snippet, l: r.link })))}`
         });
 
         const grievances = JSON.parse(aiResponse.text);

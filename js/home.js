@@ -90,7 +90,7 @@ const Home = {
         phoneInput.disabled = true;
 
         try {
-            const response = await fetch('http://localhost:3002/call', {
+            const response = await fetch(`${GrievanceDesk.CONFIG.API_BASE_URL}/call`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ phone })

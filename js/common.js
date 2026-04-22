@@ -96,6 +96,9 @@ const SEED_DATA = {
 
 /* ===== CORE UTILITIES ===== */
 const GrievanceDesk = {
+    CONFIG: {
+        API_BASE_URL: 'http://192.168.1.35:3002' // Set to laptop IP for mobile testing on same Wi-Fi
+    },
     init() {
         let existingData = localStorage.getItem('gd_data');
         if (!existingData) {

@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         socialFeed.innerHTML = '<div class="loading-state"><div class="spinner"></div><p>Scanning live social media for REAL grievances...</p></div>';
         
         try {
-            const response = await fetch(`http://localhost:3002/api/social-live?area=Hyderabad`);
+            const response = await fetch(`${GrievanceDesk.CONFIG.API_BASE_URL}/api/social-live?area=Hyderabad`);
             const data = await response.json();
 
             if (data.success && data.grievances && data.grievances.length > 0) {
